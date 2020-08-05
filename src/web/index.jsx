@@ -8,7 +8,7 @@ PluginStore.register(new PluginManifest({}, {
 
   eventNotificationTypes: [
     {
-      type: 'slack-notification-v1',
+      type: 'slack-notification-v2',
       displayName: 'Slack Notification',
       formComponent: SlackNotificationForm,
       summaryComponent: SlackNotificationSummary,

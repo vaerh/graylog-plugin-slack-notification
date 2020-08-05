@@ -25,18 +25,20 @@ public class SlackClient {
 
 	private static final Logger LOG = LoggerFactory.getLogger(SlackClient.class);
 
-	private final String webhookUrl;
+	private final String serverUrl;
 	private final String proxyURL;
+	private final String botToken;
 
 	public SlackClient(SlackEventNotificationConfig configuration) {
-		this.webhookUrl = configuration.webhookUrl();
+		this.serverUrl = configuration.serverUrl();
 		this.proxyURL = configuration.proxy();
+		this.botToken = configuration.botToken();
 	}
 
 	public void send(SlackMessage message) throws SlackClientException {
 		final URL url;
 		try {
-			url = new URL(webhookUrl);
+			url = new URL(serverUrl);
 		} catch (MalformedURLException e) {
 			throw new SlackClientException("Error while constructing webhook URL.", e);
 		}
@@ -53,7 +55,8 @@ public class SlackClient {
 			}
 			conn.setDoOutput(true);
 			conn.setRequestMethod("POST");
-			conn.setRequestProperty("Content-Type", "application/json");
+			conn.setRequestProperty("Content-Type", "application/json; charset=utf-8");
+			conn.setRequestProperty("Authorization", "Bearer " + botToken);
 		} catch (URISyntaxException | IOException e) {
 			throw new SlackClientException("Could not open connection to Slack API", e);
 		}

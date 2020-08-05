@@ -20,12 +20,24 @@ class SlackNotificationSummary extends React.Component {
       <CommonNotificationSummary {...this.props}>
         <React.Fragment>
           <tr>
-            <td>Color</td>
-            <td>{notification.config.color}</td>
+            <td>Color for "Low" priority message</td>
+            <td>{notification.config.color_low}</td>
+          </tr>
+          <tr>
+            <td>Color for "Normal" priority message</td>
+            <td>{notification.config.color_normal}</td>
+          </tr>
+          <tr>
+            <td>Color for "High" priority message</td>
+            <td>{notification.config.color_high}</td>
+          </tr>
+          <tr>
+            <td>Server URL</td>
+            <td>{notification.config.server_url}</td>
           </tr>
           <tr>
             <td>Webhook URL</td>
-            <td>{notification.config.webhook_url}</td>
+            <td>{notification.config.bot_token}</td>
           </tr>
           <tr>
             <td>Channel</td>

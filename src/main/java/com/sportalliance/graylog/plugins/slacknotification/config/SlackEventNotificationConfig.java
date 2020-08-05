@@ -22,10 +22,13 @@ import com.google.auto.value.AutoValue;
 @JsonTypeName(SlackEventNotificationConfig.TYPE_NAME)
 @JsonDeserialize(builder = SlackEventNotificationConfig.Builder.class)
 public abstract class SlackEventNotificationConfig implements EventNotificationConfig {
-	public static final String TYPE_NAME = "slack-notification-v1";
+	public static final String TYPE_NAME = "slack-notification-v2";
 
-	static final String FIELD_COLOR = "color";
-	static final String FIELD_WEBHOOK_URL = "webhook_url";
+	static final String FIELD_COLOR_LOW = "color_low";
+	static final String FIELD_COLOR_NORMAL = "color_normal";
+	static final String FIELD_COLOR_HIGH = "color_high";
+	static final String FIELD_SERVER_URL = "server_url";
+	static final String FIELD_BOT_TOKEN = "bot_token";
 	static final String FIELD_CHANNEL = "channel";
 	static final String FIELD_CUSTOM_MESSAGE = "custom_message";
 	static final String FIELD_BACKLOG_ITEM_MESSAGE = "backlog_item_message";
@@ -37,13 +40,25 @@ public abstract class SlackEventNotificationConfig implements EventNotificationC
 	static final String FIELD_GRAYLOG_URL = "graylog_url";
 	static final String FIELD_PROXY = "proxy";
 
-	@JsonProperty(FIELD_COLOR)
+	@JsonProperty(FIELD_COLOR_LOW)
 	@NotBlank
-	public abstract String color();
+	public abstract String colorLow();
 
-	@JsonProperty(FIELD_WEBHOOK_URL)
+	@JsonProperty(FIELD_COLOR_NORMAL)
 	@NotBlank
-	public abstract String webhookUrl();
+	public abstract String colorNormal();
+
+	@JsonProperty(FIELD_COLOR_HIGH)
+	@NotBlank
+	public abstract String colorHigh();
+
+	@JsonProperty(FIELD_SERVER_URL)
+	@NotBlank
+	public abstract String serverUrl();
+
+	@JsonProperty(FIELD_BOT_TOKEN)
+	@NotBlank
+	public abstract String botToken();
 
 	@JsonProperty(FIELD_CHANNEL)
 	@NotBlank
@@ -100,11 +115,20 @@ public abstract class SlackEventNotificationConfig implements EventNotificationC
 					.type(TYPE_NAME);
 		}
 
-		@JsonProperty(FIELD_COLOR)
-		public abstract SlackEventNotificationConfig.Builder color(String color);
+		@JsonProperty(FIELD_COLOR_LOW)
+		public abstract SlackEventNotificationConfig.Builder colorLow(String colorLow);
 
-		@JsonProperty(FIELD_WEBHOOK_URL)
-		public abstract SlackEventNotificationConfig.Builder webhookUrl(String webhookUrl);
+		@JsonProperty(FIELD_COLOR_NORMAL)
+		public abstract SlackEventNotificationConfig.Builder colorNormal(String colorNormal);
+
+		@JsonProperty(FIELD_COLOR_HIGH)
+		public abstract SlackEventNotificationConfig.Builder colorHigh(String colorHigh);
+
+		@JsonProperty(FIELD_SERVER_URL)
+		public abstract SlackEventNotificationConfig.Builder serverUrl(String serverUrl);
+
+		@JsonProperty(FIELD_BOT_TOKEN)
+		public abstract SlackEventNotificationConfig.Builder botToken(String botToken);
 
 		@JsonProperty(FIELD_CHANNEL)
 		public abstract SlackEventNotificationConfig.Builder channel(String channel);
@@ -142,8 +166,11 @@ public abstract class SlackEventNotificationConfig implements EventNotificationC
 	@Override
 	public EventNotificationConfigEntity toContentPackEntity(EntityDescriptorIds entityDescriptorIds) {
 		return SlackEventNotificationConfigEntity.builder()
-				.color(ValueReference.of(color()))
-				.webhookUrl(ValueReference.of(webhookUrl()))
+				.colorLow(ValueReference.of(colorLow()))
+				.colorNormal(ValueReference.of(colorNormal()))
+				.colorHigh(ValueReference.of(colorHigh()))
+				.serverUrl(ValueReference.of(serverUrl()))
+				.botToken(ValueReference.of(botToken()))
 				.channel(ValueReference.of(channel()))
 				.customMessage(ValueReference.of(customMessage()))
 				.backlogItemMessage(ValueReference.of(backlogItemMessage()))

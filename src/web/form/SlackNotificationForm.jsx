@@ -13,8 +13,11 @@ class SlackNotificationForm extends React.Component {
   };
 
   static defaultConfig = {
-    color: '#FF0000',
-    webhook_url: '',
+    color_low: '#566262',
+    color_normal: '#1d5a9b',
+    color_high: '#831939',
+    server_url: '',
+    bot_token: '',
     channel: '#channel',
     custom_message: ''
             + 'Message: ${event.message}\n'
@@ -56,22 +59,49 @@ class SlackNotificationForm extends React.Component {
 
     return (
       <React.Fragment>
-        <Input id="notification-color"
-               name="color"
-               label="Custom Message Color"
+        <Input id="notification-colorLow"
+               name="color_low"
+               label="Custom Message Color for 'Low' priority events"
                type="text"
-               bsStyle={validation.errors.color ? 'error' : null}
-               help={lodash.get(validation, 'errors.color[0]', 'Color to use for Slack message')}
-               value={config.color || ''}
+               bsStyle={validation.errors.color_low ? 'error' : null}
+               help={lodash.get(validation, 'errors.color_low[0]', 'Color to use for Slack message')}
+               value={config.color_low || ''}
                onChange={this.handleChange}
                required />
-        <Input id="notification-webhookUrl"
-               name="webhook_url"
-               label="Webhook URL"
+        <Input id="notification-colorNormal"
+               name="color_normal"
+               label="Custom Message Color for 'Normal' priority events"
                type="text"
-               bsStyle={validation.errors.webhook_url ? 'error' : null}
-               help={lodash.get(validation, 'errors.webhook_url[0]', 'Slack "Incoming Webhook" URL')}
-               value={config.webhook_url || ''}
+               bsStyle={validation.errors.color_normal ? 'error' : null}
+               help={lodash.get(validation, 'errors.color_normal[0]', 'Color to use for Slack message')}
+               value={config.color_normal || ''}
+               onChange={this.handleChange}
+               required />
+        <Input id="notification-colorHigh"
+               name="color_high"
+               label="Custom Message Color for 'High' priority events"
+               type="text"
+               bsStyle={validation.errors.color_high ? 'error' : null}
+               help={lodash.get(validation, 'errors.color_high[0]', 'Color to use for Slack message')}
+               value={config.color_high || ''}
+               onChange={this.handleChange}
+               required />
+        <Input id="notification-serverUrl"
+               name="server_url"
+               label="Server URL"
+               type="text"
+               bsStyle={validation.errors.server_url ? 'error' : null}
+               help={lodash.get(validation, 'errors.server_url[0]', 'Slack/Mattermost server URL')}
+               value={config.server_url || ''}
+               onChange={this.handleChange}
+               required />
+        <Input id="notification-botToken"
+               name="bot_token"
+               label="Bot access token"
+               type="text"
+               bsStyle={validation.errors.bot_token ? 'error' : null}
+               help={lodash.get(validation, 'errors.bot_token[0]', 'Access token from the BOT account')}
+               value={config.bot_token || ''}
                onChange={this.handleChange}
                required />
         <Input id="notification-channel"

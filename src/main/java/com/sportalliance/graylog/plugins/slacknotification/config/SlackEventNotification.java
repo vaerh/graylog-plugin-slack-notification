@@ -129,8 +129,19 @@ public class SlackEventNotification implements EventNotification {
 			backlogItemMessages = buildBacklogItemMessages(ctx, config, backlogItemTemplate);
 		}
 
+		String color = config.colorNormal();
+		switch ((int)ctx.event().priority()) {
+			case 1:
+				color = config.colorLow();
+				break;
+			case 3:
+				color = config.colorHigh();
+				break;
+		}
+
+
 		return new SlackMessage(
-				config.color(),
+				color,
 				config.iconEmoji(),
 				config.iconUrl(),
 				config.userName(),
